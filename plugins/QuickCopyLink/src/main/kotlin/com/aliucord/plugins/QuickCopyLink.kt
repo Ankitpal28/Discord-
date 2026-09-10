@@ -5,6 +5,7 @@ import com.aliucord.Utils
 import com.aliucord.annotations.AliucordPlugin
 import com.aliucord.api.CommandsAPI
 import com.aliucord.entities.Plugin
+import com.aliucord.wrappers.ChannelWrapper
 import com.discord.stores.StoreStream
 
 @AliucordPlugin(requiresRestart = false)
@@ -15,9 +16,9 @@ class QuickCopyLink : Plugin() {
             "copychannel",
             "Copy a link to the current channel",
         ) {
-            val channel = StoreStream.getChannelsSelected().selectedChannel
-            val guildId = channel.getGuildId()
-            val channelId = channel.getId()
+            val channel = ChannelWrapper(StoreStream.getChannelsSelected().selectedChannel)
+            val guildId = channel.guildId
+            val channelId = channel.id
             val link = if (guildId != 0L)
                 "https://discord.com/channels/$guildId/$channelId"
             else
