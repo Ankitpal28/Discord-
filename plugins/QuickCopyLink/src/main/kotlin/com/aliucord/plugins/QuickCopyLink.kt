@@ -16,10 +16,12 @@ class QuickCopyLink : Plugin() {
             "Copy a link to the current channel",
         ) {
             val channel = StoreStream.getChannelsSelected().selectedChannel
-            val link = if (channel.guildId != 0L)
-                "https://discord.com/channels/${channel.guildId}/${channel.id}"
+            val guildId = channel.getGuildId()
+            val channelId = channel.getId()
+            val link = if (guildId != 0L)
+                "https://discord.com/channels/$guildId/$channelId"
             else
-                "https://discord.com/channels/@me/${channel.id}"
+                "https://discord.com/channels/@me/$channelId"
 
             Utils.setClipboard("Channel Link", link)
             CommandsAPI.CommandResult("Copied: $link")
